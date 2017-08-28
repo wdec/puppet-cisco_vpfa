@@ -20,13 +20,38 @@
 #   NOTE: The configuration MUST NOT be already handled by this module
 #   or Puppet catalog compilation will fail with duplicate resources.
 #
-class cisco_vpfa::config (
-  $cisco_vpfa_config = {},
-) {
+class cisco_vpfa::config {
 
-  include ::cisco_vpfa::deps
+  if $cisco_vpfa::underlay_if_name and $cisco_vpfa::underlay_if_name =~ /^bond/ {
+    cisco_vpfa_config {
+      'other/bond_if_list': value => $cisco_vpfa::bond_if_list;
+    }
+  }
 
-  validate_hash($cisco_vpfa_config)
-
-  create_resources('cisco_vpfa_config', $cisco_vpfa_config)
+  cisco_vpfa_config {
+    'vts/vts_address': value => $cisco_vpfa::vts_address;
+    'vts_registration_api': value => $cisco_vpfa::vts_registration_api;
+    'vts/vts_username': value => $cisco_vpfa::vts_username;
+    'vts/vts_password': value => $cisco_vpfa::vts_password;
+    'network/hostname': value => $cisco_vpfa::hostname;
+    'network/network_config_method': value => $cisco_vpfa::network_config_method;
+    'network/network_ip_address': value => $cisco_vpfa::network_ipv4_address;
+    'network/network_ip_netmask': value => $cisco_vpfa::network_ipv4_mask;
+    'network/network_ip_gateway': value => $cisco_vpfa::network_ipv4_gateway;
+    'other/compute_hostname': value => $cisco_vpfa::compute_hostname;
+    'other/network_nameserver': value => $cisco_vpfa::network_nameserver;
+    'other/vif_type': value => $cisco_vpfa::params::vif_type;
+    'other/underlay_if_name': value => $cisco_vpfa::underlay_if_name;
+    'other/underlay_ip_net_list': value => $cisco_vpfa::underlay_ip_net_list;
+  }
 }
+#class cisco_vpfa::config (
+#  $cisco_vpfa_config = {},
+#) {
+#
+#  include ::cisco_vpfa::deps
+#
+#  validate_hash($cisco_vpfa_config)
+#
+#  create_resources('cisco_vpfa_config', $cisco_vpfa_config)
+#}

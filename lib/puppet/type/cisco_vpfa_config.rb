@@ -7,7 +7,7 @@ Puppet::Type.newtype(:cisco_vpfa_config) do
     newvalues(/\S+\/\S+/)
   end
 
-  newproperty(:value, :array_mathcing => :all) do
+  newproperty(:value, :array_matching => :all) do
     desc 'The value of the setting to be defined.'
     def insync?(is)
       return true if @should.empty?
