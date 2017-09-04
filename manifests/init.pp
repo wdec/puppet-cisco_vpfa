@@ -50,7 +50,7 @@ class cisco_vpfa (
   )
 
   class { '::cisco_vpfa::config': }
-  ~> class { '::cisco::service': }
+  ~> class { '::cisco_vpfa::service': }
   -> Class['::cisco_vpfa']
 
 
