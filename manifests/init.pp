@@ -12,7 +12,7 @@ class cisco_vpfa (
   $vts_password,
   $vts_address,
   $vts_registration_api,
-  $hostname,
+  $vpfa_hostname,
   $network_config_method,
   $network_ipv4_address,
   $network_ipv4_mask,
@@ -20,7 +20,7 @@ class cisco_vpfa (
   $compute_hostname,
   $network_nameserver,
   $vif_type,
-  $underlay_if_name,
+  $underlay_interface,
   $bond_if_list,
   $underlay_ip_net_list,
   $package_ensure   = 'present'
@@ -51,7 +51,7 @@ class cisco_vpfa (
 
   class { '::cisco_vpfa::config': }
   ~> class { '::cisco_vpfa::service': }
-  -> Class['::cisco_vpfa']
+#  -> Class['::cisco_vpfa']
 
 
 }

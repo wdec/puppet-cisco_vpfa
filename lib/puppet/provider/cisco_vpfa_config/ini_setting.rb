@@ -17,7 +17,7 @@ Puppet::Type.type(:cisco_vpfa_config).provide(
   end
 
   def self.file_path
-    '/etc/vpe/vpfa.ini'
+    '/etc/vpe/vpfa/vpfa.ini'
   end
 
 end
