@@ -49,6 +49,8 @@ class cisco_vpfa (
     }
   )
 
+  include ::cisco_vpfa::underlay_mac
+
   class { '::cisco_vpfa::config': }
   ~> class { '::cisco_vpfa::service': }
 #  -> Class['::cisco_vpfa']

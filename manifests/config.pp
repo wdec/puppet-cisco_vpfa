@@ -26,7 +26,9 @@ class cisco_vpfa::config {
     cisco_vpfa_config {
       'other/bond_if_list': value => $cisco_vpfa::bond_if_list;
     }
+    #TODO Get name of first interface and derive mac address
   }
+
 
   cisco_vpfa_config {
     'vts/vts_address': value => $cisco_vpfa::vts_address;
@@ -43,7 +45,7 @@ class cisco_vpfa::config {
     'other/vif_type': value => $cisco_vpfa::params::vif_type;
     'other/underlay_if_name': value => $cisco_vpfa::underlay_interface;
     'other/underlay_ip_net_list': value => $cisco_vpfa::underlay_ip_net_list;
-    'other/tls_version': value => 1.2;
+    'other/tls_version': value => $cisco_vpfa::params::vts_tls_version;
   }
 }
 #class cisco_vpfa::config (

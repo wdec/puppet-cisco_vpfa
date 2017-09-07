@@ -5,4 +5,5 @@ class cisco_vpfa::params {
   $vts_network_config_method = 'static'
   $vif_type = 'vhostuser'
   $package_ensure   = 'present'
+  $underlay_if_file = "/etc/vpe/vpfa/underlay_mac"
 }
