@@ -49,7 +49,8 @@ class cisco_vpfa (
     }
   )
 
-  include ::cisco_vpfa::underlay_mac
+  # Include depending on who/when the underlay mac file gets generated.
+  #include ::cisco_vpfa::underlay_mac
 
   class { '::cisco_vpfa::config': }
   ~> class { '::cisco_vpfa::service': }

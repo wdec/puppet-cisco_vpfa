@@ -8,6 +8,7 @@ class cisco_vpfa::underlay_mac {
 
   file {"/etc/vpe/vpfa/underlay_mac" :
     ensure => present,
-    content => $::macaddress,
+    # This needs to be the mac address of the lead interface mapped to the VPP
+    #content => $::macaddress,
   }
 }
