@@ -22,11 +22,10 @@
 #
 class cisco_vpfa::config {
 
-  if $cisco_vpfa::underlay_interface =~ /^bond/ {
+  if !empty(grep(any2array($cisco_vpfa::underlay_interface), 'bond')) {
     cisco_vpfa_config {
-      'other/bond_if_list': value => $cisco_vpfa::bond_if_list;
+      'other/bond_if_list': value =>join(any2array($cisco_vpfa::bond_if_list), ', ');
     }
-    #TODO Get name of first interface and derive mac address
   }
 
 
@@ -43,8 +42,8 @@ class cisco_vpfa::config {
     'other/compute_host_name': value => $cisco_vpfa::compute_hostname;
     'other/network_nameserver': value => $cisco_vpfa::network_nameserver;
     'other/vif_type': value => $cisco_vpfa::params::vif_type;
-    'other/underlay_if_name': value => $cisco_vpfa::underlay_interface;
-    'other/underlay_ip_net_list': value => $cisco_vpfa::underlay_ip_net_list;
+    'other/underlay_if_name': value => join(any2array($cisco_vpfa::underlay_interface), ', ');
+    'other/underlay_ip_net_list': value => join(any2array($cisco_vpfa::underlay_ip_net_list), ', ');
     'other/tls_version': value => $cisco_vpfa::params::vts_tls_version;
   }
 }
