@@ -72,6 +72,10 @@
 # (optional) List of other underlay IP subnets
 # Example: '10.0.1.0/24, 10.0.2.0/24'
 #
+# [*vtsr_ip_address_list*]
+# List of VTSR IPs on the underlay network
+# Example: '10.0.1.1, 10.0.1.2'
+#
 
 class cisco_vpfa (
   $vts_username,
@@ -89,7 +93,8 @@ class cisco_vpfa (
   $underlay_interface,
   $bond_if_list             = $::cisco_vpfa::params::bond_if_list,
   $underlay_ip_net_list     = $::cisco_vpfa::params::underlay_ip_net_list,
-  $package_ensure           = $::cisco_vpfa::params::package_ensure
+  $package_ensure           = $::cisco_vpfa::params::package_ensure,
+  $vtsr_ip_address_list
 
 ) inherits ::cisco_vpfa::params {
 

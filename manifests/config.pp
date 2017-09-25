@@ -28,7 +28,6 @@ class cisco_vpfa::config {
     }
   }
 
-
   cisco_vpfa_config {
     'vts/vts_address': value => $cisco_vpfa::vts_address;
     'vts/vts_registration_api': value => $cisco_vpfa::vts_registration_api;
@@ -45,6 +44,7 @@ class cisco_vpfa::config {
     'other/underlay_if_name': value => join(any2array($cisco_vpfa::underlay_interface), ', ');
     'other/underlay_ip_net_list': value => join(any2array($cisco_vpfa::underlay_ip_net_list), ', ');
     'other/tls_version': value => $cisco_vpfa::params::vts_tls_version;
+    'vtsr/vtsr_ip_address_list': value => join(any2array($cisco_vpfa::vtsr_ip_address_list), ', ');
   }
 }
 #class cisco_vpfa::config (
