@@ -40,7 +40,7 @@ class cisco_vpfa::config {
     'network/network_ip_gateway': value => $cisco_vpfa::network_ipv4_gateway;
     'other/compute_host_name': value => $cisco_vpfa::compute_hostname;
     'other/network_nameserver': value => $cisco_vpfa::network_nameserver;
-    'other/vif_type': value => $cisco_vpfa::params::vif_type;
+    'other/vif_type': value => $cisco_vpfa::vif_type;
     'other/underlay_if_name': value => join(any2array($cisco_vpfa::underlay_interface), ', ');
     'other/underlay_ip_net_list': value => join(any2array($cisco_vpfa::underlay_ip_net_list), ', ');
     'other/tls_version': value => $cisco_vpfa::params::vts_tls_version;

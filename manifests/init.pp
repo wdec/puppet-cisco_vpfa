@@ -74,8 +74,8 @@
 # Example: '10.0.0.10'
 #
 # [*vif_type*]
-# (optional) The vif-type to use
-# Example: 'vhost-user'
+# (optional) The vif-type to use. Defaults to 'vhostuser'
+# Example: 'vhostuser'
 #
 # [*underlay_interface*]
 # (required) List of the underlay interfaces or "bond"
