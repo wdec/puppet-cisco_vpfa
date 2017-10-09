@@ -14,4 +14,6 @@ class cisco_vpfa::params {
   $vtsr_ip_address_list               = []
   $username                           = ''
   $password_hash                      = ''
+  $enabled                            = true
+  $service_ensure                     = true
 }

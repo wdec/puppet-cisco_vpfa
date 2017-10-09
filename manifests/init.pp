@@ -99,21 +99,23 @@ class cisco_vpfa (
   $vts_password,
   $vts_address,
   $vts_registration_api,
-  $vpfa_hostname            = $::cisco_vpfa::params::vpfa_hostname,
-  $network_config_method    = $::cisco_vpfa::params::vts_network_config_method,
   $network_ipv4_address,
   $network_ipv4_mask,
   $network_ipv4_gateway,
+  $underlay_interface,
+  $vpfa_hostname            = $::cisco_vpfa::params::vpfa_hostname,
+  $network_config_method    = $::cisco_vpfa::params::vts_network_config_method,
   $compute_hostname         = $::cisco_vpfa::params::compute_hostname,
   $network_nameserver       = $::cisco_vpfa::params::network_nameserver,
   $vif_type                 = $::cisco_vpfa::params::vif_type,
-  $underlay_interface,
   $bond_if_list             = $::cisco_vpfa::params::bond_if_list,
   $underlay_ip_net_list     = $::cisco_vpfa::params::underlay_ip_net_list,
-  $package_ensure           = $::cisco_vpfa::params::package_ensure,
   $vtsr_ip_address_list     = $::cisco_vpfa::params::vtsr_ip_address_list,
   $username                 = $::cisco_vpfa::params::username,
-  $password_hash            = $::cisco_vpfa::params::password_hash
+  $password_hash            = $::cisco_vpfa::params::password_hash,
+  $package_ensure           = $::cisco_vpfa::params::package_ensure,
+  $enabled                  = $::cisco_vpfa::params::enabled,
+  $service_ensure           = $::cisco_vpfa::params::service_ensure
 
 ) inherits ::cisco_vpfa::params {
 
@@ -133,8 +135,16 @@ class cisco_vpfa (
   ensure_resource('package', 'vpfa',
     {
       ensure => $package_ensure,
+      tag    => 'cisco_vts'
     }
   )
+
+  service { 'vpfa':
+    ensure => $service_ensure,
+    name   => 'neutron-vts-agent',
+    enable => $enabled,
+    tag    => ['cisco-vts', 'neutron-db-sync-service'],
+  }
 
   class { '::cisco_vpfa::config': }
   ~> class { '::cisco_vpfa::service': }
