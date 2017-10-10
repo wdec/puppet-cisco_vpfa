@@ -135,13 +135,13 @@ class cisco_vpfa (
   ensure_resource('package', 'vpfa',
     {
       ensure => $package_ensure,
-      tag    => 'cisco_vts'
+      tag    => 'cisco-vts'
     }
   )
 
   service { 'vpfa':
     ensure => $service_ensure,
-    name   => 'neutron-vts-agent',
+    name   => 'vpfa',
     enable => $enabled,
     tag    => ['cisco-vts', 'neutron-db-sync-service'],
   }
