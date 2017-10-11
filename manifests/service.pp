@@ -4,7 +4,8 @@
 #
 class cisco_vpfa::service {
   service { 'vpfa' :
-    ensure => running,
-    enable => true,
+    ensure => $::cisco_vpfa::service_ensure,
+    enable => $::cisco_vpfa::enabled,
+    tag    => ['cisco-vts', 'neutron-db-sync-service'],
   }
 }

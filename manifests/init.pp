@@ -139,13 +139,6 @@ class cisco_vpfa (
     }
   )
 
-  service { 'vpfa':
-    ensure => $service_ensure,
-    name   => 'vpfa',
-    enable => $enabled,
-    tag    => ['cisco-vts', 'neutron-db-sync-service'],
-  }
-
   class { '::cisco_vpfa::config': }
   ~> class { '::cisco_vpfa::service': }
 
