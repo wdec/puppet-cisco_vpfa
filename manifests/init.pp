@@ -139,6 +139,18 @@ class cisco_vpfa (
     }
   )
 
+  # Interim fix until THT allows setting of libvirt config or ownership of dpdk processes is settled
+  augeas { 'qemu-security-driver':
+    context => '/files/etc/libvirt/qemu.conf',
+    changes => [
+      "set security_driver 'none'",
+    ],
+    tag     => 'qemu-conf-augeas',
+  }
+
+  Augeas<| tag == 'qemu-conf-augeas'|>
+    ~> Service['libvirt']
+
   class { '::cisco_vpfa::config': }
   ~> class { '::cisco_vpfa::service': }
 
