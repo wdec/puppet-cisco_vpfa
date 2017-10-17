@@ -22,23 +22,19 @@
 # === Parameters
 #
 # [*vts_username*]
-# (required) The VTS controller username
+# (optional) The VTS controller username
 # Example: 'admin'
 #
 # [*vts_password*]
-# (required) The VTS controller password
+# (optional) The VTS controller password
 # Example: 'admin'
 #
 # [*vts_address*]
-# (required) The IP or domain name of the VTS controller
-# Example: '127.1.1.1'
-#
-# [*vts_address*]
-# (required) The IP or domain name of the VTS controller
+# (optional) The IP or domain name of the VTS controller
 # Example: '127.1.1.1'
 #
 # [*vts_registration_api*]
-# (required) The URL for the VTFA registration API on the VTS
+# (optional) The URL for the VTFA registration API on the VTS
 # Example: 'https://<IP or FQDN of VTS>:8888/api/running/cisco-vts/vtfs/vtf'
 #
 # [*vpfa_hostname*]
@@ -95,14 +91,14 @@
 #
 
 class cisco_vpfa (
-  $vts_username,
-  $vts_password,
-  $vts_address,
-  $vts_registration_api,
-  $network_ipv4_address,
-  $network_ipv4_mask,
-  $network_ipv4_gateway,
-  $underlay_interface,
+  $vts_username             = $::os_service_default,
+  $vts_password             = $::os_service_default,
+  $vts_address              = $::os_service_default,
+  $vts_registration_api     = $::os_service_default,
+  $network_ipv4_address     = $::os_service_default,
+  $network_ipv4_mask        = $::os_service_default,
+  $network_ipv4_gateway     = $::os_service_default,
+  $underlay_interface       = $::os_service_default,
   $vpfa_hostname            = $::cisco_vpfa::params::vpfa_hostname,
   $network_config_method    = $::cisco_vpfa::params::vts_network_config_method,
   $compute_hostname         = $::cisco_vpfa::params::compute_hostname,
@@ -146,6 +142,14 @@ class cisco_vpfa (
       "set security_driver 'none'",
     ],
     tag     => 'qemu-conf-augeas',
+  }
+
+  # Hack to check is libvirt resource is defined. Needed to deal with controller roles
+  # where libvirt might not be defined
+  if !defined(Service['libvirt']) {
+    service { 'libvirt':
+      hasstatus => true,
+    }
   }
 
   Augeas<| tag == 'qemu-conf-augeas'|>
