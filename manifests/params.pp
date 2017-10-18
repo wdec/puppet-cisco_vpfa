@@ -6,7 +6,7 @@ class cisco_vpfa::params {
   $vif_type                           = 'vhostuser'
   $package_ensure                     = 'present'
   $underlay_if_file                   = "/etc/vpe/vpfa/underlay_mac"
-  $compute_hostname                   = $::hostname
+  $compute_hostname                   = $::fqdn
   $vpfa_hostname                      = $::hostname
   $network_nameserver                 = undef
   $bond_if_list                       = undef
