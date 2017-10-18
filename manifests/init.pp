@@ -135,25 +135,21 @@ class cisco_vpfa (
     }
   )
 
-  # Interim fix until THT allows setting of libvirt config or ownership of dpdk processes is settled
-  augeas { 'qemu-security-driver':
-    context => '/files/etc/libvirt/qemu.conf',
-    changes => [
-      "set security_driver 'none'",
-    ],
-    tag     => 'qemu-conf-augeas',
-  }
-
-  # Hack to check is libvirt resource is defined. Needed to deal with controller roles
-  # where libvirt might not be defined
-  if !defined(Service['libvirt']) {
-    service { 'libvirt':
-      hasstatus => true,
+  # Interim hack until THT allows setting of libvirt config or ownership of dpdk processes is settled
+  # Check is libvirt resource is defined. It's needed to deal with controller roles
+  # where libvirt might not be defined but vpfa deployed
+  if defined(Service['libvirt']) {
+    augeas { 'qemu-security-driver':
+      context => '/files/etc/libvirt/qemu.conf',
+      changes => [
+        "set security_driver 'none'",
+      ],
+      tag     => 'qemu-conf-augeas',
     }
-  }
 
-  Augeas<| tag == 'qemu-conf-augeas'|>
-    ~> Service['libvirt']
+    Augeas<| tag == 'qemu-conf-augeas'|>
+      ~> Service['libvirt']
+  }
 
   class { '::cisco_vpfa::config': }
   ~> class { '::cisco_vpfa::service': }
