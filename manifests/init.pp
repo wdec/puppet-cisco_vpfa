@@ -86,9 +86,11 @@
 # Example: '10.0.1.0/24, 10.0.2.0/24'
 #
 # [*vtsr_ip_address_list*]
-# List of VTSR IPs on the underlay network
+# (optional) List of VTSR IPs on the underlay network
 # Example: '10.0.1.1, 10.0.1.2'
 #
+# [*set_core_dump*]
+# (optional) Boolean. Set VTS core dump format. Defaults to True.
 
 class cisco_vpfa (
   $vts_username             = $::os_service_default,
@@ -111,7 +113,8 @@ class cisco_vpfa (
   $password_hash            = $::cisco_vpfa::params::password_hash,
   $package_ensure           = $::cisco_vpfa::params::package_ensure,
   $enabled                  = $::cisco_vpfa::params::enabled,
-  $service_ensure           = $::cisco_vpfa::params::service_ensure
+  $service_ensure           = $::cisco_vpfa::params::service_ensure,
+  $set_core_dump            = $::cisco_vpfa::params::core_dump
 
 ) inherits ::cisco_vpfa::params {
 
@@ -149,6 +152,23 @@ class cisco_vpfa (
 
     Augeas<| tag == 'qemu-conf-augeas'|>
       ~> Service['libvirt']
+  }
+
+  if $set_core_dump {
+    file {'/etc/sysctl.d/81-kernel_core_pattern.conf':
+      path    => '/etc/sysctl.d/81-kernel_core_pattern.conf',
+      ensure  => present,
+      content => 'kernel.core_pattern=/var/crash/%e.%t',
+      owner   => 'root',
+      mode    =>  "0600",
+    }
+
+    exec {'Update sysctl config':
+      command     => 'sysctl -p /etc/sysctl.d/81-kernel_core_pattern.conf',
+      path        => [ '/usr/sbin', '/sbin', '/usr/bin', '/bin' ],
+      refreshonly => true,
+      subscribe   => File['/etc/sysctl.d/81-kernel_core_pattern.conf'],
+    }
   }
 
   class { '::cisco_vpfa::config': }

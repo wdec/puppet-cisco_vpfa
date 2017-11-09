@@ -16,4 +16,5 @@ class cisco_vpfa::params {
   $password_hash                      = ''
   $enabled                            = true
   $service_ensure                     = true
+  $core_dump                          = true
 }
