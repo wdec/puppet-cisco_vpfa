@@ -7,5 +7,7 @@ class cisco_vpfa::service {
     ensure => $::cisco_vpfa::service_ensure,
     enable => $::cisco_vpfa::enabled,
     tag    => ['cisco-vts', 'neutron-db-sync-service'],
+    # Require that fdio completes its configuration before
+    require => Class['::fdio'],
   }
 }
