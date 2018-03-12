@@ -17,4 +17,5 @@ class cisco_vpfa::params {
   $enabled                            = true
   $service_ensure                     = true
   $core_dump                          = true
+  $enable_vpp_stats                   = true
 }

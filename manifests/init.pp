@@ -114,7 +114,8 @@ class cisco_vpfa (
   $package_ensure           = $::cisco_vpfa::params::package_ensure,
   $enabled                  = $::cisco_vpfa::params::enabled,
   $service_ensure           = $::cisco_vpfa::params::service_ensure,
-  $set_core_dump            = $::cisco_vpfa::params::core_dump
+  $set_core_dump            = $::cisco_vpfa::params::core_dump,
+  $enable_vpp_stats         = $::cisco_vpfa::params::enable_vpp_stats
 
 ) inherits ::cisco_vpfa::params {
 
