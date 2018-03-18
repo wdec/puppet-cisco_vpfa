@@ -91,16 +91,28 @@
 #
 # [*set_core_dump*]
 # (optional) Boolean. Set VTS core dump format. Defaults to True.
+#
+# [*enable_vpp_stats*]
+# (optional) Boolean. Set VPFA to collect VPP stats. Defaults to True.
+#
+# [*enabled*]
+# (optional) Boolean. Set VPFA to be enabled at boot. Defaults to True.
+#
+# [*service_ensure*]
+# (optional) Boolean. Set VPFA service to be enabled. Defaults to True.
+#
+# [*package_ensure*]
+# (optional) Boolean. Sets VPFA package to be installed. Defaults to True.
 
 class cisco_vpfa (
-  $vts_username             = $::os_service_default,
-  $vts_password             = $::os_service_default,
-  $vts_address              = $::os_service_default,
-  $vts_registration_api     = $::os_service_default,
-  $network_ipv4_address     = $::os_service_default,
-  $network_ipv4_mask        = $::os_service_default,
-  $network_ipv4_gateway     = $::os_service_default,
-  $underlay_interface       = $::os_service_default,
+  $vts_username,
+  $vts_password,
+  $vts_address,
+  $vts_registration_api,
+  $network_ipv4_address,
+  $network_ipv4_mask,
+  $network_ipv4_gateway,
+  $underlay_interface,
   $vpfa_hostname            = $::cisco_vpfa::params::vpfa_hostname,
   $network_config_method    = $::cisco_vpfa::params::vts_network_config_method,
   $compute_hostname         = $::cisco_vpfa::params::compute_hostname,
@@ -111,6 +123,7 @@ class cisco_vpfa (
   $vtsr_ip_address_list     = $::cisco_vpfa::params::vtsr_ip_address_list,
   $username                 = $::cisco_vpfa::params::username,
   $password_hash            = $::cisco_vpfa::params::password_hash,
+  $vts_tls_version          = $::cisco_vpfa::params::vts_tls_version,
   $package_ensure           = $::cisco_vpfa::params::package_ensure,
   $enabled                  = $::cisco_vpfa::params::enabled,
   $service_ensure           = $::cisco_vpfa::params::service_ensure,
@@ -119,18 +132,6 @@ class cisco_vpfa (
 
 ) inherits ::cisco_vpfa::params {
 
-  # Validate OS
-  case $::operatingsystem {
-    'centos', 'redhat': {
-      if $::operatingsystemmajrelease != '7' {
-        # RHEL/CentOS versions < 7 not supported as they lack systemd
-        fail("Unsupported OS: ${::operatingsystem} ${::operatingsystemmajrelease}")
-      }
-    }
-    default: {
-      fail("Unsupported OS: ${::operatingsystem}")
-    }
-  }
 
   ensure_resource('package', 'vpfa',
     {

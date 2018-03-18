@@ -9,7 +9,12 @@ Puppet::Type.newtype(:cisco_vpfa_config) do
 
   newproperty(:value) do
     munge do |value|
-      value.strip if value.is_a? String
+      if value.is_a? String
+        value.strip
+      else
+        # Render also boolean settings as strings
+        value ? 'True' : 'False'
+      end
     end
   end
 

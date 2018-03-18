@@ -43,8 +43,8 @@ class cisco_vpfa::config {
     'other/vif_type': value => $cisco_vpfa::vif_type;
     'other/underlay_if_name': value => join(any2array($cisco_vpfa::underlay_interface), ', ');
     'other/underlay_ip_net_list': value => join(any2array($cisco_vpfa::underlay_ip_net_list), ', ');
-    'other/tls_version': value => $cisco_vpfa::params::vts_tls_version;
-    'other/enable_vpp_stats': value => $cisco_vpfa::params::enable_vpp_stats;
+    'other/tls_version': value => $cisco_vpfa::vts_tls_version;
+    'other/enable_vpp_stats': value => $cisco_vpfa::enable_vpp_stats;
     'vtsr/vtsr_ip_address_list': value => join(any2array($cisco_vpfa::vtsr_ip_address_list), ', ');
   }
 }
