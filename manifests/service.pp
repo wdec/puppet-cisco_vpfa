@@ -9,5 +9,6 @@ class cisco_vpfa::service {
     tag    => ['cisco-vts', 'neutron-db-sync-service'],
     # Require that fdio completes its configuration before
     require => Class['::fdio'],
+    subscribe => Package['vpfa'],
   }
 }
