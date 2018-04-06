@@ -11,4 +11,11 @@ class cisco_vpfa::service {
     require => Class['::fdio'],
     subscribe => Package['vpfa'],
   }
+
+  # Mop up vpp hugepages systemd config
+  file { ['/etc/sysctl.d/81-hugepages.conf']:
+    ensure    => 'present',
+    content  => '#CONFIG INTENTIONALLY EMPTY - Cisco VTS',
+    subscribe => Package['vpfa'],
+  }
 }
