@@ -24,7 +24,7 @@ class cisco_vpfa::config {
 
   if !empty(grep(any2array($cisco_vpfa::underlay_interface), 'bond')) {
     cisco_vpfa_config {
-      'other/bond_if_list': value =>join(any2array($cisco_vpfa::bond_if_list), ', ');
+      'other/bond_if_list': value =>join(any2array($cisco_vpfa::bond_if_list), ' ');
     }
   }
 
