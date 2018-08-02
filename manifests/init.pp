@@ -22,20 +22,23 @@
 # === Parameters
 #
 # [*vts_username*]
-# (optional) The VTS controller username
+# The VTS controller username
 # Example: 'admin'
 #
 # [*vts_password*]
-# (optional) The VTS controller password
+# The VTS controller password
 # Example: 'admin'
 #
 # [*vts_address*]
-# (optional) The IP or domain name of the VTS controller
+# The IP or domain name of the VTS controller
 # Example: '127.1.1.1'
 #
 # [*vts_registration_api*]
-# (optional) The URL for the VTFA registration API on the VTS
+# The URL for the VTFA registration API on the VTS
 # Example: 'https://<IP or FQDN of VTS>:8888/api/running/cisco-vts/vtfs/vtf'
+#
+# [*vmmid*]
+# The VMM_ID for this device as assigned by the VTS
 #
 # [*vpfa_hostname*]
 # (optional) The VPFA's  host name
@@ -109,6 +112,7 @@ class cisco_vpfa (
   $vts_password,
   $vts_address,
   $vts_registration_api,
+  $vmmid,
   $network_ipv4_address,
   $network_ipv4_mask,
   $network_ipv4_gateway,

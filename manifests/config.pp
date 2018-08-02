@@ -33,6 +33,7 @@ class cisco_vpfa::config {
     'vts/vts_registration_api': value => $cisco_vpfa::vts_registration_api;
     'vts/vts_username': value => $cisco_vpfa::vts_username;
     'vts/vts_password': value => $cisco_vpfa::vts_password;
+    'vts/vmm_id': value => $cisco_vpfa::vmmid;
     'network/hostname': value => $cisco_vpfa::vpfa_hostname;
     'network/network_config_method': value => $cisco_vpfa::network_config_method;
     'network/network_ip_address': value => $cisco_vpfa::network_ipv4_address;
